@@ -9,12 +9,14 @@ import EditarProdutos from './routes/EditarProdutos/index.tsx';
 import Error from './routes/Error/index.tsx';
 
 const router = createBrowserRouter([
-  {path:'/', element: <App/>, errorElement: <Error/>, children:[
-    {path: '/', element: <Home/>},
-    {path:'/produtos',element:<Produtos/>},
-    {path:'/editar-produtos/:id', element:<EditarProdutos/>},
-    // { path: '/editar-produtos', element: <EditarProdutos /> },
-  ]},
+  {
+    path: '/', element: <App />, errorElement: <Error />, children: [
+      { path: '/', element: <Home /> },
+      { path: '/produtos', element: <Produtos /> },
+      { path: '/editar-produtos/:id', element: <EditarProdutos /> },
+      // { path: '/editar-produtos', element: <EditarProdutos /> },
+    ]
+  },
 
 ]);
 
