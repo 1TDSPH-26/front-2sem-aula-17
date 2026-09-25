@@ -1,15 +1,20 @@
 import { useEffect, useState } from "react";
 import type { TipoProduto } from "../../Types/types";
+import { Link, useNavigate } from "react-router";
+import { FaRegEdit as Editar} from "react-icons/fa";
+import { TiDeleteOutline as Excluir} from "react-icons/ti";
 
 export default function Produtos(){
     document.title = "Produtos";
+
+    const navigate = useNavigate()
     
     const[produtos, setProdutos] = useState<TipoProduto[]>([]);
 
     useEffect( () => {
         const carregaProdutos = async ()=>{
             try{
-                const resposta = await fetch("http://localhost:5173/produtos");
+                const resposta = await fetch("http://localhost:3001/produtos");
 
                 if (!resposta.ok){
                     throw new Error("Erro na listagem dos produtos!");
@@ -26,6 +31,21 @@ export default function Produtos(){
         carregaProdutos();
 
     }, []);
+
+    const handleDelete = async (id:string)=>{
+        try{
+            const response = await fetch(`http://localhost:3001/produtos/${id}`, { method: "DELETE" });
+
+            if(!response.ok){
+                throw new Error(`Ocorreu um erro na exclusão do produto: ${response.status} - ${response.statusText}`);
+            }
+
+            alert("Produto excluido com sucesso!")
+            navigate("/")
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return(
         <main>
@@ -48,7 +68,11 @@ export default function Produtos(){
                                 <td>{produto.nome}</td>
                                 <td>{produto.preco}</td>
                                 <td>{produto.estoque}</td>
-                                <td>EDITAR/EXCLUIR</td>
+                                <td>
+                                    <Link to={`/editar-produtos/${produto.id}`}> <Editar/> </Link>
+                                    /
+                                    <Link to="#" onClick={()=> handleDelete(produto.id)}> <Excluir/> </Link>
+                                </td>
                             </tr>
                         ) )}
                     </tbody>
