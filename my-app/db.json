@@ -20,8 +20,8 @@
     },
     {
       "id": "4",
-      "nome": "Cadeira Gamer",
-      "preco": 1568,
+      "nome": "Cadeira gamer",
+      "preco": "1568",
       "estoque": 3
     }
   ],

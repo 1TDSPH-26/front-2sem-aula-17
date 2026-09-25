@@ -55,7 +55,7 @@ export default function Home() {
     }
   }
 
-  // loadingData();
+  //loadingData();
 
  },[]);
 
@@ -72,10 +72,9 @@ export default function Home() {
       <div>
         <ul>
           {usuarios.map( (u,indice)=>(
+            //<link rel="" href={u.html_url} />
             <li key={indice}>{u.id} - {u.login} - 
-            
-              <a href={u.html_url} target="_blank"><img src={u.avatar_url} alt={u.login} width={40} /></a>
-            
+              <a href={u.html_url}><img src={u.avatar_url} alt={u.login} /></a>
             </li>
           ))}
         </ul>
