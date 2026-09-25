@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react"
 import type { TipoProduto } from "../../types/types";
-
-
+import { Link, useNavigate } from "react-router";
+import { FaRegEdit as Editar} from "react-icons/fa";
+import { MdDelete as Deletar} from "react-icons/md";
 
 export default function Produtos(){
     document.title = "Produto"
+
+    const navigate = useNavigate();
 
     const[produtos, setProdutos] = useState<TipoProduto[]>([]);
     
@@ -28,6 +31,28 @@ export default function Produtos(){
         carregaProdutos();
     },[])
 
+    const handDelete = async (id:string)=>{
+        try{
+
+            const resposta = await fetch(`http://localhost:3001/produtos/${id}`,{
+                method:"DELETE"
+            });
+
+
+            //ERROR
+            if(!resposta.ok){
+                throw new Error(`Ocorreu um erro na exclusão do produto: ${resposta.status} - ${resposta.statusText}`)
+            }
+
+        
+            //Redirect
+            navigate("/produtos")
+
+        } catch(error){
+            console.log(error)
+        }
+    }
+
     return(
         <main>
             <h2>Página de produtos</h2>
@@ -50,7 +75,11 @@ export default function Produtos(){
                                     <td>{produto.nome}</td>
                                     <td>{produto.preco}</td>
                                     <td>{produto.estoque}</td>
-                                    <td>EDITAR/ <button>EXCLUIR</button></td>
+                                    <td>
+                                        <Link to={`/editar-produtos/${produto.id}`}><Editar/></Link>
+                                        |
+                                        <Link to='#' onClick={()=> handDelete(produto.id)}><Deletar/></Link>
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>
