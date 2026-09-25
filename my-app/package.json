@@ -11,8 +11,10 @@
     "api": "json-server db.json --port 3001"
   },
   "dependencies": {
+    "@react-icons/all-files": "^4.1.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
+    "react-icons": "^5.7.0",
     "react-router": "^8.3.1"
   },
   "devDependencies": {
