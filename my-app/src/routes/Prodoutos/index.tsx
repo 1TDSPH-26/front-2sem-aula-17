@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react"
 import type { tipoProduto } from "../../types/tipoProduto"
-
+import { Link, useNavigate } from "react-router";
+import { FaEdit } from "react-icons/fa";
+import { FaRegTrashAlt } from "react-icons/fa";
 
 
 
 export default function Produtos() {
     document.title = "Produtos";
+
+    const navigate = useNavigate()
+
+
     const [produto, setProduto] = useState<tipoProduto[]>([]);
 
     useEffect(() => {
@@ -17,6 +23,7 @@ export default function Produtos() {
                 if(!response.ok) {
                 throw new Error("Erro ao carregar produtos");
             }
+            
 
             const data: tipoProduto[] = await response.json();
             setProduto(data);
@@ -28,6 +35,25 @@ export default function Produtos() {
 
         carregarProdutos();
     }, []);
+
+    const handleDelete = async (id: string) => {
+        try {
+
+            const resposta = await fetch(`http://localhost:3001/produtos/${id}`, {
+                method: "DELETE"
+            });
+            
+            if(!resposta.ok){
+                throw new Error(`Ocorreu o erro na exclusão do produto: ${resposta.status} - ${resposta.statusText}`)
+            }
+
+            alert(`Produto excluido com seucesso`)
+            navigate("/produtos")
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     return(
         <div>
             <h1>Produtos </h1>
@@ -49,7 +75,10 @@ export default function Produtos() {
                                 <td>{prod.nome}</td>
                                 <td>{prod.preco}</td>
                                 <td>{prod.estoque}</td>
-                                <td>EDITAR/EXCLUIR</td>
+                                <td>
+                                    <Link to={`/editar-produtos/${prod.id}`}> <FaEdit/> | </Link>
+                                    <Link to="#" onClick={() => handleDelete(prod.id)} > <FaRegTrashAlt/> </Link>
+                                    </td>
                             </tr>
                         ))}
                     </tbody>
