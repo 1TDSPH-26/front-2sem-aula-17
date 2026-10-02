@@ -55,7 +55,7 @@ export default function Home() {
     }
   }
 
-  // loadingData();
+  //loadingData();
 
  },[]);
 
@@ -72,8 +72,15 @@ export default function Home() {
       <div>
         <ul>
           {usuarios.map( (u,indice)=>(
+<<<<<<< HEAD
             <li key={indice}>{u.id} - {u.login} - 
             <a href={u.html_url} target="_blank"><img src={u.avatar_url} alt={u.login} width={40}/></a></li>
+=======
+            //<link rel="" href={u.html_url} />
+            <li key={indice}>{u.id} - {u.login} - 
+              <a href={u.html_url}><img src={u.avatar_url} alt={u.login} /></a>
+            </li>
+>>>>>>> origin/feature/exemplo-pf0670
           ))}
         </ul>
       </div>
